@@ -1,0 +1,12 @@
+/.idea
+/.vs
+/.vscode
+
+/[Ll]ibrary
+/[Ll]ogs
+/[Tt]emp
+/[Oo]bj
+
+/*.sln
+/*.csproj
+/*.user
