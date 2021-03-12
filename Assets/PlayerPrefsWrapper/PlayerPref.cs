@@ -11,7 +11,6 @@ namespace PlayerPrefsWrapper
             this.DefaultValue = defaultValue;
         }
 
-        public abstract T Get();
-        public abstract void Set(T value);
+        public abstract T Value { get; set; }
     }
 }

@@ -6,7 +6,10 @@ namespace PlayerPrefsWrapper
     {
         public PlayerPrefString(string key, string defaultValue = "") : base(key, defaultValue) { }
 
-        public override string Get() => PlayerPrefs.GetString(Key, DefaultValue);
-        public override void Set(string value) => PlayerPrefs.SetString(Key, value);
+        public override string Value
+        {
+            get => PlayerPrefs.GetString(Key, DefaultValue);
+            set => PlayerPrefs.SetString(Key, value);
+        }
     }
 }

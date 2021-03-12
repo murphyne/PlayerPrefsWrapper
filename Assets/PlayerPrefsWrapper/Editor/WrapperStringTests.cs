@@ -16,14 +16,22 @@ namespace PlayerPrefsWrapper.Editor
         public void WrapperStringDefaultUnset()
         {
             var pref = new PlayerPrefString("Name");
-            Assert.AreEqual("", pref.Get());
+            Assert.AreEqual("", pref.Value);
         }
 
         [Test]
         public void WrapperStringDefault()
         {
             var pref = new PlayerPrefString("Name", "Odin");
-            Assert.AreEqual("Odin", pref.Get());
+            Assert.AreEqual("Odin", pref.Value);
+        }
+
+        [Test]
+        public void WrapperStringAdditionAssignment()
+        {
+            var pref = new PlayerPrefString("Name", "Odin");
+            pref.Value += "son";
+            Assert.AreEqual("Odinson", pref.Value);
         }
     }
 }
