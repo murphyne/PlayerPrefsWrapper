@@ -33,5 +33,29 @@ namespace PlayerPrefsWrapper.Editor
             pref.Value += "son";
             Assert.AreEqual("Odinson", pref.Value);
         }
+
+        [Test]
+        public void WrapperStringKeyIsNotSetImmediately()
+        {
+            var pref = new PlayerPrefString("Name");
+            Assert.AreEqual(false, pref.Exists);
+        }
+
+        [Test]
+        public void WrapperStringKeyIsSetAfterAssignment()
+        {
+            var pref = new PlayerPrefString("Name");
+            pref.Value = "Odin";
+            Assert.AreEqual(true, pref.Exists);
+        }
+
+        [Test]
+        public void WrapperStringKeyIsUnsetAfterDelete()
+        {
+            var pref = new PlayerPrefString("Name");
+            pref.Value = "Odin";
+            pref.Delete();
+            Assert.AreEqual(false, pref.Exists);
+        }
     }
 }

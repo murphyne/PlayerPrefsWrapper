@@ -33,5 +33,29 @@ namespace PlayerPrefsWrapper.Editor
             pref.Value += 1f;
             Assert.AreEqual(37.6f, pref.Value);
         }
+
+        [Test]
+        public void WrapperFloatKeyIsNotSetImmediately()
+        {
+            var pref = new PlayerPrefFloat("Temperature");
+            Assert.AreEqual(false, pref.Exists);
+        }
+
+        [Test]
+        public void WrapperFloatKeyIsSetAfterAssignment()
+        {
+            var pref = new PlayerPrefFloat("Temperature");
+            pref.Value = 36.6f;
+            Assert.AreEqual(true, pref.Exists);
+        }
+
+        [Test]
+        public void WrapperFloatKeyIsUnsetAfterDelete()
+        {
+            var pref = new PlayerPrefFloat("Temperature");
+            pref.Value = 36.6f;
+            pref.Delete();
+            Assert.AreEqual(false, pref.Exists);
+        }
     }
 }

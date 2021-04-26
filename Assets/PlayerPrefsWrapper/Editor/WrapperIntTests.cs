@@ -33,5 +33,29 @@ namespace PlayerPrefsWrapper.Editor
             pref.Value += 1;
             Assert.AreEqual(43, pref.Value);
         }
+
+        [Test]
+        public void WrapperIntKeyIsNotSetImmediately()
+        {
+            var pref = new PlayerPrefInt("Counter");
+            Assert.AreEqual(false, pref.Exists);
+        }
+
+        [Test]
+        public void WrapperIntKeyIsSetAfterAssignment()
+        {
+            var pref = new PlayerPrefInt("Counter");
+            pref.Value = 42;
+            Assert.AreEqual(true, pref.Exists);
+        }
+
+        [Test]
+        public void WrapperIntKeyIsUnsetAfterDelete()
+        {
+            var pref = new PlayerPrefInt("Counter");
+            pref.Value = 42;
+            pref.Delete();
+            Assert.AreEqual(false, pref.Exists);
+        }
     }
 }

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace PlayerPrefsWrapper
 {
     public abstract class PlayerPref<T> : IPlayerPref<T>
@@ -12,5 +14,12 @@ namespace PlayerPrefsWrapper
         }
 
         public abstract T Value { get; set; }
+
+        public bool Exists => PlayerPrefs.HasKey(Key);
+
+        public void Delete()
+        {
+            PlayerPrefs.DeleteKey(Key);
+        }
     }
 }
