@@ -1,8 +1,10 @@
+using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
 public static class PackageBuilder
 {
+    [MenuItem("Assets/Create GZip tarball", false)]
     private static void PackTgz()
     {
         const string sourceFolder = "Assets/PlayerPrefsWrapper";
