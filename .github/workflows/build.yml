@@ -76,3 +76,50 @@ jobs:
       with:
         name: TestResults-${{ matrix.testMode }}.xml
         path: Builds/TestResults-${{ matrix.testMode }}.xml
+
+  build-tgz:
+    needs: test
+    name: Build tgz
+    runs-on: ubuntu-latest
+    container: unityci/editor:2019.4.34f1-base-0
+    steps:
+
+    - name: Checkout Package
+      uses: actions/checkout@v1
+      with:
+        lfs: true
+
+    - name: Restore Library from cache
+      uses: actions/cache@v2
+      with:
+        path: Library
+        key: Library-base
+
+    - name: Activate Unity
+      run: |
+        echo "$UNITY_LICENSE" > /Unity_v2019.x.ulf
+
+        unity-editor \
+        -batchmode -nographics -quit -logFile \
+        -manualLicenseFile /Unity_v2019.x.ulf || true
+
+        rm /Unity_v2019.x.ulf
+
+    - name: Build .tgz
+      id: build_tgz
+      run: |
+        mkdir -p Builds
+
+        unity-editor \
+        -batchmode -nographics -quit -logFile \
+        -projectPath . \
+        -executeMethod PackageBuilder.PackTgz
+
+        echo "::set-output name=path::$(ls Builds/*.tgz)"
+        echo "::set-output name=name::$(basename Builds/*.tgz)"
+
+    - name: Upload .tgz
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ steps.build_tgz.outputs.name }}
+        path: ${{ steps.build_tgz.outputs.path }}
