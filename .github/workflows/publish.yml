@@ -1,0 +1,78 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+jobs:
+
+  publish:
+    runs-on: ubuntu-latest
+    container: unityci/editor:2019.4.34f1-base-0
+    permissions:
+      contents: write
+    steps:
+
+    - name: Checkout Package
+      uses: actions/checkout@v1
+      with:
+        lfs: true
+
+    - name: Restore Library from cache
+      uses: actions/cache@v2
+      with:
+        path: Library
+        key: Library-base
+
+    - name: Activate Unity
+      run: |
+        echo "$UNITY_LICENSE" > /Unity_v2019.x.ulf
+
+        unity-editor \
+        -batchmode -nographics -quit -logFile \
+        -manualLicenseFile /Unity_v2019.x.ulf || true
+
+        rm /Unity_v2019.x.ulf
+
+    - name: Build .tgz
+      id: build_tgz
+      run: |
+        mkdir -p Builds
+
+        unity-editor \
+        -batchmode -nographics -quit -logFile \
+        -projectPath . \
+        -executeMethod PackageBuilder.PackTgz
+
+        echo "::set-output name=path::$(ls Builds/*.tgz)"
+        echo "::set-output name=name::$(basename Builds/*.tgz)"
+
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+
+    - name: Upload .tgz to release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_name: ${{ steps.build_tgz.outputs.name }}
+        asset_path: ${{ steps.build_tgz.outputs.path }}
+        asset_content_type: application/gzip
+
+    - name: Upload .tgz to artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ steps.build_tgz.outputs.name }}
+        path: ${{ steps.build_tgz.outputs.path }}
+        retention-days: 5
