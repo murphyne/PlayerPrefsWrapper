@@ -2,6 +2,7 @@
 /.vs
 /.vscode
 
+/[Bb]uilds
 /[Ll]ibrary
 /[Ll]ogs
 /[Tt]emp
