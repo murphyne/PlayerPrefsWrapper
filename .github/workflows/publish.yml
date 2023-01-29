@@ -48,8 +48,8 @@ jobs:
         -projectPath . \
         -executeMethod PackageBuilder.PackTgz
 
-        echo "::set-output name=path::$(ls Builds/*.tgz)"
-        echo "::set-output name=name::$(basename Builds/*.tgz)"
+        echo "path=$(ls Builds/*.tgz)" >> $GITHUB_OUTPUT
+        echo "name=$(basename Builds/*.tgz)" >> $GITHUB_OUTPUT
 
     - name: Create release
       id: create_release
