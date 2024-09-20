@@ -1,6 +1,9 @@
 # PlayerPrefs Wrapper
 
-This is a wrapper for the UnityEngine.PlayerPrefs API.
+This is a wrapper for the [UnityEngine.PlayerPrefs API][PlayerPrefs].
+
+[PlayerPrefs]:
+https://docs.unity3d.com/ScriptReference/PlayerPrefs.html
 
 
 ## Features
