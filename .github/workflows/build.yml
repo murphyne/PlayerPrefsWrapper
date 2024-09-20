@@ -15,7 +15,7 @@ jobs:
   test:
     name: Test in ${{ matrix.testMode }}
     runs-on: ubuntu-latest
-    container: unityci/editor:2019.4.34f1-base-0
+    container: unityci/editor:2019.4.34f1-base-3
     strategy:
       matrix:
         testMode:
@@ -81,7 +81,7 @@ jobs:
     needs: test
     name: Build tgz
     runs-on: ubuntu-latest
-    container: unityci/editor:2019.4.34f1-base-0
+    container: unityci/editor:2019.4.34f1-base-3
     steps:
 
     - name: Checkout Package
