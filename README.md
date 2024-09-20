@@ -15,14 +15,22 @@ https://docs.unity3d.com/ScriptReference/PlayerPrefs.html
 
 ## Installation
 
-- Download the .tgz file from [Releases][Releases].
-- Add the .tgz file to your Unity project [using the Package Manager][UPM-Tarball].
+- To install from a Git URL:
+  - Copy Git URL: `https://github.com/murphyne/PlayerPrefsWrapper.git?path=Packages/PlayerPrefsWrapper`
+  - Follow the instructions on the [Install a UPM package from a Git URL][UPM-Git] page.
+
+- To install from a tarball file:
+  - Download the .tgz file from [Releases][Releases].
+  - Follow the instructions on the [Install a UPM package from a local tarball file][UPM-Tarball] page.
 
 [Releases]:
 https://github.com/murphyne/PlayerPrefsWrapper/releases
 
 [UPM-Tarball]:
 https://docs.unity3d.com/Manual/upm-ui-tarball.html
+
+[UPM-Git]:
+https://docs.unity3d.com/Manual/upm-ui-giturl.html
 
 
 ## Usage
