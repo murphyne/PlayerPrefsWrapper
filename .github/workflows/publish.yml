@@ -51,6 +51,13 @@ jobs:
         echo "path=$(ls Builds/*.tgz)" >> $GITHUB_OUTPUT
         echo "name=$(basename Builds/*.tgz)" >> $GITHUB_OUTPUT
 
+    - name: Upload .tgz to artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.build_tgz.outputs.name }}
+        path: ${{ steps.build_tgz.outputs.path }}
+        retention-days: 5
+
     - name: Create release
       id: create_release
       uses: actions/create-release@v1
@@ -69,10 +76,3 @@ jobs:
         asset_name: ${{ steps.build_tgz.outputs.name }}
         asset_path: ${{ steps.build_tgz.outputs.path }}
         asset_content_type: application/gzip
-
-    - name: Upload .tgz to artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ steps.build_tgz.outputs.name }}
-        path: ${{ steps.build_tgz.outputs.path }}
-        retention-days: 5
