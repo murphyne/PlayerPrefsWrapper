@@ -39,7 +39,7 @@ jobs:
         echo "$UNITY_LICENSE" > /Unity_v2022.x.ulf
 
         unity-editor \
-        -batchmode -nographics -quit -logFile \
+        -batchmode -nographics -quit -logFile - \
         -manualLicenseFile /Unity_v2022.x.ulf || true
 
         rm /Unity_v2022.x.ulf
@@ -49,7 +49,7 @@ jobs:
       run: |
         xvfb-run --auto-servernum --server-args='-screen 0 640x480x24' \
         unity-editor \
-        -batchmode -logFile \
+        -batchmode -logFile - \
         -projectPath . \
         -runTests -testPlatform ${{ matrix.testMode }} \
         -testResults Builds/TestResults-${{ matrix.testMode }}.xml
@@ -100,7 +100,7 @@ jobs:
         echo "$UNITY_LICENSE" > /Unity_v2022.x.ulf
 
         unity-editor \
-        -batchmode -nographics -quit -logFile \
+        -batchmode -nographics -quit -logFile - \
         -manualLicenseFile /Unity_v2022.x.ulf || true
 
         rm /Unity_v2022.x.ulf
@@ -111,7 +111,7 @@ jobs:
         mkdir -p Builds
 
         unity-editor \
-        -batchmode -nographics -quit -logFile \
+        -batchmode -nographics -quit -logFile - \
         -projectPath . \
         -executeMethod PackageBuilder.PackTgz
 
