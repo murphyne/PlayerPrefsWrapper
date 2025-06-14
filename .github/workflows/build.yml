@@ -71,7 +71,7 @@ jobs:
 
         exit $UNITY_EXIT_CODE
 
-    - name: Upload ${{ matrix.testMode }} test results
+    - name: Upload ${{ matrix.testMode }} test results to artifacts
       uses: actions/upload-artifact@v4
       with:
         name: TestResults-${{ matrix.testMode }}.xml
@@ -79,7 +79,7 @@ jobs:
 
   build-tgz:
     needs: test
-    name: Build tgz
+    name: Build .tgz
     runs-on: ubuntu-latest
     container: unityci/editor:2022.3.62f1-base-3
     steps:
@@ -118,7 +118,7 @@ jobs:
         echo "path=$(ls Builds/*.tgz)" >> $GITHUB_OUTPUT
         echo "name=$(basename Builds/*.tgz)" >> $GITHUB_OUTPUT
 
-    - name: Upload .tgz
+    - name: Upload .tgz to artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ${{ steps.build_tgz.outputs.name }}
