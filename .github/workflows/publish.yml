@@ -12,7 +12,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    container: unityci/editor:2019.4.34f1-base-3
+    container: unityci/editor:2022.3.62f1-base-3
     permissions:
       contents: write
     steps:
@@ -30,13 +30,13 @@ jobs:
 
     - name: Activate Unity
       run: |
-        echo "$UNITY_LICENSE" > /Unity_v2019.x.ulf
+        echo "$UNITY_LICENSE" > /Unity_v2022.x.ulf
 
         unity-editor \
         -batchmode -nographics -quit -logFile \
-        -manualLicenseFile /Unity_v2019.x.ulf || true
+        -manualLicenseFile /Unity_v2022.x.ulf || true
 
-        rm /Unity_v2019.x.ulf
+        rm /Unity_v2022.x.ulf
 
     - name: Build .tgz
       id: build_tgz
