@@ -1,5 +1,6 @@
 {
     "name": "PlayerPrefsWrapper.Tests.Editor",
+    "rootNamespace": "",
     "references": [
         "GUID:0168d2704795c9e47ab6434932923472"
     ],
@@ -8,9 +9,9 @@
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
+    "overrideReferences": true,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
