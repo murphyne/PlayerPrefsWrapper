@@ -76,6 +76,7 @@ jobs:
       with:
         name: TestResults-${{ matrix.testMode }}.xml
         path: Builds/TestResults-${{ matrix.testMode }}.xml
+        archive: false
 
   build-tgz:
     needs: test
@@ -123,3 +124,4 @@ jobs:
       with:
         name: ${{ steps.build_tgz.outputs.name }}
         path: ${{ steps.build_tgz.outputs.path }}
+        archive: false
