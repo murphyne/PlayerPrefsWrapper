@@ -60,20 +60,7 @@ jobs:
         retention-days: 5
 
     - name: Create release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: ncipollo/release-action@v1
       with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
-
-    - name: Upload .tgz to release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_name: ${{ steps.build_tgz.outputs.name }}
-        asset_path: ${{ steps.build_tgz.outputs.path }}
-        asset_content_type: application/gzip
+        artifacts: ${{ steps.build_tgz.outputs.path }}
+        artifactContentType: application/gzip
