@@ -9,7 +9,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    container: unityci/editor:6000.0.80f1-base-3
+    container: unityci/editor:6000.0.85f1-base-3
     permissions:
       contents: write
     steps:
