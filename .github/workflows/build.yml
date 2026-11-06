@@ -12,7 +12,7 @@ jobs:
   test:
     name: Test in ${{ matrix.testMode }}
     runs-on: ubuntu-latest
-    container: unityci/editor:6000.0.85f1-base-3
+    # container: unityci/editor:6000.0.85f1-base-3
     strategy:
       matrix:
         testMode:
@@ -37,21 +37,34 @@ jobs:
         path: Library
         key: Library-base
 
+    - name: Pull Docker image
+      run: |
+        docker pull unityci/editor:6000.0.85f1-base-3
+
+    - name: Run Docker container
+      run: |
+        docker run \
+        --name=my --rm -itd \
+        -v $(pwd):/repo -w /repo \
+        unityci/editor:6000.0.85f1-base-3
+
     - name: Activate Unity
       env:
         UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       run: |
-        echo "$UNITY_LICENSE" > /Unity_lic.ulf
+        echo "$UNITY_LICENSE" > $(pwd)/Unity_lic.ulf
 
+        docker exec my \
         unity-editor \
         -batchmode -nographics -quit -logFile - \
-        -manualLicenseFile /Unity_lic.ulf || true
+        -manualLicenseFile Unity_lic.ulf || true
 
-        rm /Unity_lic.ulf
+        rm $(pwd)/Unity_lic.ulf
 
     - name: Run ${{ matrix.testMode }} tests
       shell: sh {0}
       run: |
+        docker exec my \
         xvfb-run --auto-servernum --server-args='-screen 0 640x480x24' \
         unity-editor \
         -batchmode -logFile - \
@@ -87,7 +100,7 @@ jobs:
     needs: test
     name: Build .tgz
     runs-on: ubuntu-latest
-    container: unityci/editor:6000.0.85f1-base-3
+    # container: unityci/editor:6000.0.85f1-base-3
     steps:
 
     - name: Checkout Package
@@ -107,23 +120,36 @@ jobs:
         path: Library
         key: Library-base
 
+    - name: Pull Docker image
+      run: |
+        docker pull unityci/editor:6000.0.85f1-base-3
+
+    - name: Run Docker container
+      run: |
+        docker run \
+        --name=my --rm -itd \
+        -v $(pwd):/repo -w /repo \
+        unityci/editor:6000.0.85f1-base-3
+
     - name: Activate Unity
       env:
         UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       run: |
-        echo "$UNITY_LICENSE" > /Unity_lic.ulf
+        echo "$UNITY_LICENSE" > $(pwd)/Unity_lic.ulf
 
+        docker exec my \
         unity-editor \
         -batchmode -nographics -quit -logFile - \
-        -manualLicenseFile /Unity_lic.ulf || true
+        -manualLicenseFile Unity_lic.ulf || true
 
-        rm /Unity_lic.ulf
+        rm $(pwd)/Unity_lic.ulf
 
     - name: Build .tgz
       id: build_tgz
       run: |
         mkdir -p Builds
 
+        docker exec my \
         unity-editor \
         -batchmode -nographics -quit -logFile - \
         -projectPath . \
