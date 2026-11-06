@@ -5,9 +5,6 @@ on:
     tags:
       - 'v*'
 
-env:
-  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-
 jobs:
 
   publish:
@@ -29,6 +26,8 @@ jobs:
         key: Library-base
 
     - name: Activate Unity
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       run: |
         echo "$UNITY_LICENSE" > /Unity_lic.ulf
 

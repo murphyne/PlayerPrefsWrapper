@@ -7,9 +7,6 @@ on:
     branches: [master]
   workflow_dispatch:
 
-env:
-  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-
 jobs:
 
   test:
@@ -35,6 +32,8 @@ jobs:
         key: Library-base
 
     - name: Activate Unity
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       run: |
         echo "$UNITY_LICENSE" > /Unity_lic.ulf
 
@@ -97,6 +96,8 @@ jobs:
         key: Library-base
 
     - name: Activate Unity
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       run: |
         echo "$UNITY_LICENSE" > /Unity_lic.ulf
 
