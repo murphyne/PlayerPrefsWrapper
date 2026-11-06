@@ -19,6 +19,12 @@ jobs:
       with:
         lfs: true
 
+    - name: Free disk space
+      uses: jlumbroso/free-disk-space@v1.3.1
+      with:
+        large-packages: true
+        tool-cache: true
+
     - name: Restore Library from cache
       uses: actions/cache@v6
       with:
